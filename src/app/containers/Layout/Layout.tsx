@@ -1,6 +1,6 @@
 import * as React from 'react'
 import accountImg from 'Assets/images/account.png'
-import {Main} from 'App/containers/Main/Main.tsx';
+import { Main } from 'App/containers/Main/Main';
 import { Link, Route, Switch } from 'react-router-dom';
 
 export const Layout = () => {
@@ -22,8 +22,8 @@ export const Layout = () => {
                 </ul>
             </nav>
             <Switch>
-                <Route path="/main" component={Main}/>
-                <Route path="/todo" component={Main}/>
+                <Route path="/main" component={Main} />
+                <Route path="/todo" component={Main} />
             </Switch>
         </div>
     )

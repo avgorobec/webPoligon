@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { NewsList } from 'App/components/News/NewsList';
-import { runInAction, makeObservable, action, observable } from 'mobx'
-
-import { newModel } from 'App/models'
+import { makeObservable, action, observable } from 'mobx'
+import { newModel, newsList } from 'App/models'
 
 class News {
     news: Array<newModel> = [];
@@ -14,18 +13,12 @@ class News {
         })
     }
 
-
     getNews() {
         fetch('http://newsapi.org/v2/top-headlines?country=ru&apiKey=2bbd19e763524eedb1cf7c824c356504')
-            .then(res => res.json)
-            .then((news: any) => {
-                console.log(news)
-                if (news.status === 'ok') {
-                    runInAction(() => {
-                        console.log(news)
-                        this.news = news.articles
-                    })
-                }
+            .then((response: Response) => response.json())
+            .then((data: newsList) => {
+                // console.log(data)
+                this.news = data.articles
             })
     }
 }

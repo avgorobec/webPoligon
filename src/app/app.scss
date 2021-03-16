@@ -21,6 +21,14 @@ html, body {
     color: $white-color;
     font-size: 2rem;
     padding: 0 20px;
+
+    &__logo {
+        color: $white-color;
+        text-decoration: none;
+    }
+    &__logo:hover {
+        color: $warning-color;
+    }
 }
 
 .nav {

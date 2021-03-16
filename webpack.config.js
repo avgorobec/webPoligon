@@ -34,7 +34,8 @@ module.exports = {
     mainFields: ['module', 'browser', 'main'],
     alias: {
       App: path.resolve(__dirname, 'src/app/'),
-      Assets: path.resolve(__dirname, 'src/assets/')
+      Assets: path.resolve(__dirname, 'src/assets/'),
+      'react-dom': '@hot-loader/react-dom'
     }
   },
   module: {

@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { NewsList } from 'App/components/News/NewsList';
-import { makeObservable, action, observable } from 'mobx'
+import { makeObservable, action, observable, runInAction, computed } from 'mobx'
 import { newModel, newsList } from 'App/models'
 
 class News {
     news: Array<newModel> = [];
+    selectedIdNews: number | null = null;
 
     constructor() {
         makeObservable(this, {
             news: observable,
-            getNews: action
+            selectNews: action,
+            getNews: action,
+            chooseNews: computed,
         })
     }
 
@@ -17,14 +20,23 @@ class News {
         fetch('http://newsapi.org/v2/top-headlines?country=ru&apiKey=2bbd19e763524eedb1cf7c824c356504')
             .then((response: Response) => response.json())
             .then((data: newsList) => {
-                // console.log(data)
-                this.news = data.articles
+                runInAction(() => this.news = data.articles)                
             })
+    }
+
+    selectNews(id: number) {
+        runInAction(() => this.selectedIdNews = id)        
+    }
+
+    get chooseNews() {
+        return this.news.find((item: newModel, index: number) => index === this.selectedIdNews && item)
     }
 }
 const NewsStore = new News();
 
 export const Main = () => {
+    // console.log(NewsStore);
+    
     return (
         <main className="main">
             <div className="card news">
@@ -33,7 +45,7 @@ export const Main = () => {
                     <div className="news__list">
                         <NewsList store={NewsStore} />
                     </div>
-                    <div className="news__content">2</div>
+                    <div className="news__content">{NewsStore.selectedIdNews}</div>
                 </div>
             </div>
             <div className="card quotes">
